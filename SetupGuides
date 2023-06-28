@@ -1,0 +1,76 @@
+using System;
+
+public class Tank
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+    public string Direction { get; set; }
+
+    public Tank(int x, int y, string direction)
+    {
+        X = x;
+        Y = y;
+        Direction = direction;
+    }
+
+    public void Move(string direction)
+    {
+        switch(direction.ToLower())
+        {
+            case "up":
+                Y--;
+                break;
+            case "down":
+                Y++;
+                break;
+            case "left":
+                X--;
+                break;
+            case "right":
+                X++;
+                break;
+        }
+        Direction = direction;
+    }
+
+    public void Shoot()
+    {
+        Console.WriteLine("Bang!");
+    }
+}
+
+public class Game
+{
+    private Tank playerTank;
+
+    public Game()
+    {
+        playerTank = new Tank(0, 0, "up");
+    }
+
+    public void Start()
+    {
+        string command = "";
+        while (command != "quit")
+        {
+            command = Console.ReadLine().ToLower();
+            if (command == "shoot")
+            {
+                playerTank.Shoot();
+            }
+            else if (new[] { "up", "down", "left", "right" }.Contains(command))
+            {
+                playerTank.Move(command);
+            }
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Game game = new Game();
+        game.Start();
+    }
+}
